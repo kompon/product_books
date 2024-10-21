@@ -23,9 +23,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // เส้นทางสำหรับ API หนังสือ
-router.post('/Books', upload.single('image'), bookController.createBook);
-router.get('/Books', bookController.getdata);
-router.put('/Books/:book_id', upload.single('image'), bookController.updateBook);
-router.delete('/Books/:book_id', bookController.deleteBook);
+router.post('/books', upload.single('image'), bookController.createBook); // ใช้ตัวพิมพ์เล็ก
+router.get('/books', bookController.getdata); // ใช้ตัวพิมพ์เล็ก
+router.put('/books/:book_id', upload.single('image'), bookController.updateBook); // ใช้ตัวพิมพ์เล็ก
+router.delete('/books/:book_id', bookController.deleteBook); // ใช้ตัวพิมพ์เล็ก
 
 module.exports = router;
