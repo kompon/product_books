@@ -1,22 +1,11 @@
 const express = require('express');
-const cors = require('cors');
-const sequelize = require('./config/db');
-const userRoutes = require('./routes/userRoutes');
-const bookRoutes = require('./routes/bookRoutes');
+const sequelize = require('./config/db'); // ปรับเส้นทางให้ตรงกับที่อยู่ของไฟล์ db.js
+
 const app = express();
-
-app.use(cors());
-app.use(express.json());
-app.use(express.static('public'));
-
-// เส้นทาง API
-app.use('/api/users', userRoutes);
-app.use('/api/books', bookRoutes);
+// ... ตั้งค่าเซิร์ฟเวอร์อื่น ๆ ...
 
 const PORT = process.env.PORT || 3000;
 
-sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
-}).catch(error => console.error(error));
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
