@@ -1,66 +1,53 @@
-const Product = require('../models/product');
+const Book = require('../models/book');
 
-// สร้างหนังสือใหม่
+// ฟังก์ชันสำหรับเพิ่มข้อมูลหนังสือใหม่
 exports.createBook = async (req, res) => {
     try {
         const { book_name, price } = req.body;
         const image_url = req.file ? req.file.filename : null;
-
-        const product = await Product.create({
-            book_name,
-            image_url,
-            price
-        });
-
-        res.status(201).json({ message: 'เพิ่มหนังสือใหม่สำเร็จ', product });
+        const book = await Book.create({ book_name, image_url, price });
+        res.status(201).json({ message: 'เพิ่มหนังสือใหม่สำเร็จ', book });
     } catch (error) {
         res.status(500).json({ message: 'เกิดข้อผิดพลาดในการเพิ่มหนังสือ', error: error.message });
     }
 };
 
-// ดึงข้อมูลหนังสือทั้งหมด
+// ฟังก์ชันสำหรับดึงข้อมูลหนังสือทั้งหมด
 exports.getdata = async (req, res) => {
     try {
-        const products = await Product.findAll();
-        res.status(200).json(products);
+        const books = await Book.findAll();
+        res.status(200).json(books);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
-// แก้ไขข้อมูลหนังสือตาม ID
+// ฟังก์ชันสำหรับแก้ไขข้อมูลหนังสือตาม ID
 exports.updateBook = async (req, res) => {
     try {
         const { book_name, price } = req.body;
         const image_url = req.file ? req.file.filename : null;
-
-        const product = await Product.findByPk(req.params.book_id);
-        if (!product) {
+        const book = await Book.findByPk(req.params.book_id);
+        if (!book) {
             return res.status(404).json({ error: 'ไม่พบหนังสือ' });
         }
-
-        await product.update({
-            book_name,
-            image_url,
-            price
-        });
-        res.json(product);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+        await book.update({ book_name, image_url, price });
+        res.json(book);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 };
 
-// ลบข้อมูลหนังสือตาม ID
+// ฟังก์ชันสำหรับลบข้อมูลหนังสือตาม ID
 exports.deleteBook = async (req, res) => {
     try {
-        const product = await Product.findByPk(req.params.book_id);
-        if (!product) {
+        const book = await Book.findByPk(req.params.book_id);
+        if (!book) {
             return res.status(404).json({ error: 'ไม่พบหนังสือ' });
         }
-
-        await product.destroy();
-        res.json({ message: 'ลบหนังสสำเร็จ' });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+        await book.destroy();
+        res.json({ message: 'ลบหนังสือสำเร็จ' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 };

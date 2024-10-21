@@ -2,14 +2,11 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-
 const bookController = require('../controllers/bookController');
 const router = express.Router();
 
-// กำหนดโฟลเดอร์สำหรับจัดเก็บไฟล์ที่อัปโหลด
+// กำหนดโฟลเดอร์สำหรับจัดเก็บไฟล์ที่อัพโหลด
 const upload_path = './public/images';
-
-// ตรวจสอบว่ามีโฟลเดอร์ images หรือไม่
 if (!fs.existsSync(upload_path)) {
     fs.mkdirSync(upload_path, { recursive: true });
 }
@@ -23,10 +20,9 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + path.extname(file.originalname));
     },
 });
-
 const upload = multer({ storage: storage });
 
-// กำหนดเส้นทางหรือ URL สำหรับเรียกใช้งานแต่ละ API
+// เส้นทางสำหรับ API หนังสือ
 router.post('/Books', upload.single('image'), bookController.createBook);
 router.get('/Books', bookController.getdata);
 router.put('/Books/:book_id', upload.single('image'), bookController.updateBook);

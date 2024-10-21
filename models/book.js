@@ -1,9 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
-// เชื่อมต่อกับฐานข้อมูล
 const sequelize = require('../config/db');
 
-// สร้าง Model สำหรับ Product
-const Product = sequelize.define('Product', {
+// สร้าง Model สำหรับ Book
+const Book = sequelize.define('Book', {
     book_id: {
         allowNull: false,
         autoIncrement: true,
@@ -23,8 +22,8 @@ const Product = sequelize.define('Product', {
         allowNull: false,
     },
 }, {
-    tableName: 'books', // ชื่อ table ในฐานข้อมูล
-    timestamps: true, // สร้าง createdAt และ updatedAt
+    tableName: 'books',
+    timestamps: true,
 });
 
-module.exports = Product;
+module.exports = Book;
